@@ -1,40 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
-
-    <title>VR Project</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+  <title>VR Project</title>
+  <style>
+    body {
+      margin: 0;
+    }
+    .demo {
+      background: linear-gradient(#ffffff, #ada996);
+      overflow-x: hidden;
+    }
+    #ar-button {
+      position: absolute;
+      top: 75%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #ffffffBF;
+      border-radius: 4px;
+      border: none;
+      padding: 20px;
+      font-size: 16px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
+  <div class="demo">
+    <model-viewer
+      id="neutral-demo"
+      src="Models/monkey.glb"
+      ios-src="Models/monkey.usdz"
+      style="width: 100vw; height: 90vh;"
+      camera-orbit="45deg 55deg 3m"
+      autoplay
+      ar
+      ar-modes="webxr scene-viewer"
+      shadow-intensity="2"
+      ar-scale="fixed"
+      poster="Poster/silvair.png"
+      reveal="auto"
+      disable-zoom
+      disable-pan
+      disable-tap>
 
-<div class="demo" style="background: linear-gradient(#ffffff, #ada996); overflow-x: hidden;">
-  <span style="position: absolute; text-align: center; font-size: 100px; line-height: 100px; left: 50%; transform: translateX(-50%);">This<br>is nice<br>text<br>transparent<br>objects.</span>
+      <button slot="ar-button" id="ar-button">
+        Aktywuj AR
+      </button>
 
-    <model-viewer 
-        src="Models/bird.glb" 
-        style="width: 100vw; height: 90vh;"
-        camera-controls 
-        autoplay ar ar-modes="webxr scene-viewer"
-        shadow-intensity="2"
-        scale="2 2 2">
-</model-viewer>
-</div>
+    </model-viewer>
+  </div>
+
+  <script>
+                  (() => {
+                    const modelViewer = document.querySelector('#neutral-demo');
+                    const checkbox = document.querySelector('#neutral');
+
+                    checkbox.addEventListener('change', () => {
+                      modelViewer.environmentImage = checkbox.checked ? '' : 'legacy';
+                    });
+                  })();
+                </script>
 </body>
-
-<style>
-    #ar-button {
-        position: absolute;
-        bottom: 20px;
-        margin:auto
-        transform: translateX(-50%);
-        background-color: #fff;
-        border: none;
-        padding: 10px 20px;
-        font-size: 16px;
-        cursor: pointer;
-    }
-</style>
 </html>
